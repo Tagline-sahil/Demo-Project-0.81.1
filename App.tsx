@@ -1,9 +1,10 @@
 import { StyleSheet, View } from 'react-native';
 import React from 'react';
 // import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import CarouselReanimated from './src/screen/CarouselReanimated';
-import Index from './src/screen/Index';
-import CarouselYoutube from './src/screen/CarouselYoutube';
+import CarouselReanimated from './src/screen/carousel/CarouselReanimated';
+import Index from './src/screen/carousel/Index';
+import CarouselYoutube from './src/screen/carousel/CarouselYoutube';
+import SVGCircle from './src/screen/circle/SVGCircle';
 
 const App = () => {
   return (
@@ -11,7 +12,8 @@ const App = () => {
     <View style={styles.container}>
       {/* <CarouselReanimated /> */}
       {/* <Index /> */}
-      <CarouselYoutube />
+      {/* <CarouselYoutube /> */}
+      <SVGCircle percent={50} />
     </View>
     // </GestureHandlerRootView>
   );
