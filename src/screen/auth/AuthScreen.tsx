@@ -1,4 +1,4 @@
-import { Button, StyleSheet, TextInput, View } from 'react-native';
+import { Alert, Button, StyleSheet, TextInput, View } from 'react-native';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import auth from '@react-native-firebase/auth';
@@ -11,7 +11,7 @@ const AuthScreen = () => {
   const loginAuth = () => {
     try {
       auth().signInWithEmailAndPassword(email, password);
-      console.log('Login Success');
+      Alert.alert('success', 'Login Success');
       setEmail('');
       setPassword('');
     } catch (e) {
@@ -22,7 +22,7 @@ const AuthScreen = () => {
   const registerAuth = () => {
     try {
       auth().createUserWithEmailAndPassword(email, password);
-      console.log('Register Success');
+      Alert.alert('success', 'Register Success');
       setEmail('');
       setPassword('');
     } catch (e) {

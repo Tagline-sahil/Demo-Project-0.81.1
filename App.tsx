@@ -7,6 +7,7 @@ import CarouselYoutube from './src/screen/carousel/CarouselYoutube';
 import SVGCircle from './src/screen/circle/SVGCircle';
 import HumaOnboarding from './src/screen/wordByWord/WordByWordScreen';
 import AuthScreen from './src/screen/auth/AuthScreen';
+import UserDetailsScreen from './src/screen/userDetails/UserDetailsScreen';
 
 const App = () => {
   return (
@@ -17,7 +18,8 @@ const App = () => {
       {/* <CarouselYoutube /> */}
       {/* <SVGCircle percent={50} /> */}
       {/* <HumaOnboarding /> */}
-      <AuthScreen />
+      {/* <AuthScreen /> */}
+      <UserDetailsScreen />
     </View>
     // </GestureHandlerRootView>
   );
