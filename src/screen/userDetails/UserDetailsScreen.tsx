@@ -1,6 +1,5 @@
 import {
   Button,
-  Dimensions,
   FlatList,
   StyleSheet,
   Text,
@@ -12,13 +11,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import firestore from '@react-native-firebase/firestore';
 
 interface User {
+  id: string;
   name: string;
   age: string;
   mobile: string;
 }
 
 const UserDetailsScreen = () => {
-  const width = Dimensions.get('window').width;
   const [allUser, setAllUser] = useState(null);
   console.log('🚀 ~ UserDetailsScreen ~ allUser:', allUser);
   const [name, setName] = useState('');
@@ -51,12 +50,12 @@ const UserDetailsScreen = () => {
     setMobile('');
   };
 
-  const selectUserData = item => {
+  const selectUserData = (item: User) => {
     setSelectValue(true);
     setSelectValueId(item.id);
-    setName(item._data.name);
-    setAge(item._data.age);
-    setMobile(item._data.mobile);
+    setName(item.name);
+    setAge(item.age);
+    setMobile(item.mobile);
   };
 
   const updateUserDetails = () => {
@@ -112,43 +111,18 @@ const UserDetailsScreen = () => {
           data={allUser}
           keyExtractor={(item, index) => index.toString()}
           ListEmptyComponent={
-            <Text
-              style={{
-                textAlign: 'center',
-                marginTop: 20,
-                fontSize: 18,
-                opacity: 0.6,
-              }}
-            >
-              No users added yet
-            </Text>
+            <Text style={styles.emptyTextStyle}>No users added yet</Text>
           }
           renderItem={({ item }) => (
-            <View
-              style={{
-                flex: 1,
-                backgroundColor: 'white',
-                justifyContent: 'center',
-                alignItems: 'center',
-                paddingVertical: 10,
-                marginVertical: 5,
-                elevation: 10,
-                shadowColor: 'black',
-              }}
-            >
-              <Text style={{ fontSize: 18 }}>Name:- {item._data.name}</Text>
-              <Text style={{ fontSize: 18 }}>Age:- {item._data.age}</Text>
-              <Text style={{ fontSize: 18 }}>Mobile:- {item._data.mobile}</Text>
-              <View
-                style={{
-                  // backgroundColor: 'red',
-                  height: 50,
-                  width: width - 30,
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  gap: 10,
-                }}
-              >
+            <View style={styles.dataContainer}>
+              <Text style={styles.inputTextStyle}>
+                Name:- {item._data.name}
+              </Text>
+              <Text style={styles.inputTextStyle}>Age:- {item._data.age}</Text>
+              <Text style={styles.inputTextStyle}>
+                Mobile:- {item._data.mobile}
+              </Text>
+              <View style={styles.buttonContainer}>
                 <Button
                   onPress={() => selectUserData(item)}
                   title={
@@ -178,5 +152,30 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderColor: 'black',
     borderWidth: 1,
+  },
+  emptyTextStyle: {
+    textAlign: 'center',
+    marginTop: 20,
+    fontSize: 18,
+    opacity: 0.6,
+  },
+  dataContainer: {
+    flex: 1,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 10,
+    marginVertical: 5,
+    elevation: 10,
+    shadowColor: 'black',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 10,
+  },
+  inputTextStyle: {
+    fontSize: 18,
+    opacity: 0.6,
   },
 });
