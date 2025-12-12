@@ -1,5 +1,6 @@
-import { StyleSheet, View } from 'react-native';
-import React from 'react';
+import { Alert, PermissionsAndroid, StyleSheet, View } from 'react-native';
+import React, { useEffect } from 'react';
+import messaging from '@react-native-firebase/messaging';
 // import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import CarouselReanimated from './src/screen/carousel/CarouselReanimated';
 import Index from './src/screen/carousel/Index';
@@ -10,6 +11,46 @@ import AuthScreen from './src/screen/auth/AuthScreen';
 import UserDetailsScreen from './src/screen/userDetails/UserDetailsScreen';
 
 const App = () => {
+  useEffect(() => {
+    // Request permission
+    requestUserPermission();
+
+    // Foreground message
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      Alert.alert(
+        'New Notification',
+        JSON.stringify(remoteMessage.notification),
+      );
+    });
+
+    return unsubscribe;
+  }, []);
+
+  const requestUserPermission = async () => {
+    try {
+      const authStatus = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+      );
+      if (authStatus === PermissionsAndroid.RESULTS.GRANTED) {
+        fcmToken();
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const fcmToken = async () => {
+    try {
+      await messaging()
+        .getToken()
+        .then(token => {
+          console.log('FCM TOKEN:', token);
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     // <GestureHandlerRootView>
     <View style={styles.container}>
