@@ -10,6 +10,37 @@ import HumaOnboarding from './src/screen/wordByWord/WordByWordScreen';
 import AuthScreen from './src/screen/auth/AuthScreen';
 import UserDetailsScreen from './src/screen/userDetails/UserDetailsScreen';
 import NotifeeScreen from './src/screen/notifee/NotifeeScreen';
+import notifee, { AndroidStyle } from '@notifee/react-native';
+
+export const notifeeSend = async (data: any) => {
+  // Request permissions (required for iOS)
+  await notifee.requestPermission();
+
+  // Create a channel (required for Android)
+  const channelId = await notifee.createChannel({
+    id: 'default',
+    name: 'Default Channel',
+  });
+
+  // Display a notification
+  await notifee.displayNotification({
+    title: data.notification.title,
+    body: data.notification.body,
+    android: {
+      channelId: 'default',
+      // smallIcon: 'name-of-a-small-icon', // optional, defaults to 'ic_launcher'.
+      // pressAction is needed if you want the notification to open the app when pressed
+      pressAction: {
+        id: 'default',
+      },
+      style: {
+        type: AndroidStyle.BIGPICTURE,
+        picture:
+          'https://media.licdn.com/dms/image/v2/C4D0BAQHgja9GPmBH_w/company-logo_200_200/company-logo_200_200/0/1635830944010/tagline_infotech3_logo?e=2147483647&v=beta&t=soAU6hkRws0Fd3O3zYfdlnG_AvWaRYHtK9qlLEcuwi4',
+      },
+    },
+  });
+};
 
 const App = () => {
   useEffect(() => {
@@ -18,10 +49,7 @@ const App = () => {
 
     // Foreground message
     const unsubscribe = messaging().onMessage(async remoteMessage => {
-      Alert.alert(
-        'New Notification',
-        JSON.stringify(remoteMessage.notification),
-      );
+      notifeeSend(remoteMessage);
     });
 
     return unsubscribe;
