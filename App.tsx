@@ -11,6 +11,7 @@ import AuthScreen from './src/screen/auth/AuthScreen';
 import UserDetailsScreen from './src/screen/userDetails/UserDetailsScreen';
 import NotifeeScreen from './src/screen/notifee/NotifeeScreen';
 import notifee, { AndroidStyle } from '@notifee/react-native';
+import ApiJsonDataScreen from './src/screen/json_server_api_data/ApiJsonDataScreen';
 
 export const notifeeSend = async (data: any) => {
   // Request permissions (required for iOS)
@@ -90,7 +91,8 @@ const App = () => {
       {/* <HumaOnboarding /> */}
       {/* <AuthScreen /> */}
       {/* <UserDetailsScreen /> */}
-      <NotifeeScreen />
+      {/* <NotifeeScreen /> */}
+      <ApiJsonDataScreen />
     </View>
     // </GestureHandlerRootView>
   );
